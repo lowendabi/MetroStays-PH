@@ -3,134 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MetroStays | Premium Manila Living</title>
+    <title>MetroStays Pro | Best Prices in Manila</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=BlinkMacSystemFont,-apple-system,Segoe+UI,Roboto,Helvetica,Arial,sans-serif" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
+    <div class="top-bar">
+        <div class="container top-bar-content">
+            <div class="tb-left">
+                <a href="#"> <i class="fas fa-mobile-alt"></i> App</a>
+                <a href="#">Customer Support</a>
+            </div>
+            <div class="tb-right">
+                <a href="#">PHP</a>
+                <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Flag_of_the_Philippines.svg" width="20" alt="PH"></a>
+                <a href="#" class="btn-outline">List your property</a>
+                <a href="#" class="btn-solid">Sign in / Register</a>
+            </div>
+        </div>
+    </div>
+
     <nav>
         <div class="container nav-wrapper">
             <div class="brand">Metro<span>Stays</span></div>
-            <div class="user-actions">
-                <button class="btn-ghost">List your property</button>
-                <button class="btn-primary" onclick="alert('Login feature would connect to a backend database here.')">Sign In</button>
+            <div class="nav-links">
+                <a href="#" class="active">Stays</a>
+                <a href="#">Flights</a>
+                <a href="#">Airport Taxis</a>
+                <a href="#">Attractions</a>
             </div>
         </div>
     </nav>
 
-    <header class="hero-search">
+    <header class="hero-header">
         <div class="container">
-            <h1>Find your sanctuary in Manila.</h1>
-            <div class="search-bar">
-                <div class="search-input">
-                    <label>Location</label>
-                    <input type="text" id="locationInput" placeholder="Try 'Makati' or 'BGC'">
+            <h1>Find your next stay in Metro Manila</h1>
+            <p>Search deals on hotels, homes, and much more...</p>
+            
+            <div class="search-box-detailed">
+                <div class="sb-item location">
+                    <i class="fas fa-bed"></i>
+                    <input type="text" id="searchInput" placeholder="Where are you going?" value="Metro Manila">
                 </div>
-                <div class="divider"></div>
-                <div class="search-input">
-                    <label>Check in</label>
-                    <input type="date">
+                <div class="sb-item dates">
+                    <i class="far fa-calendar"></i>
+                    <input type="date" id="checkInDate" title="Check-in">
+                    <span>—</span>
+                    <input type="date" id="checkOutDate" title="Check-out">
                 </div>
-                <div class="divider"></div>
-                <div class="search-input">
-                    <label>Guests</label>
-                    <input type="number" placeholder="Add guests" min="1">
+                <div class="sb-item guests">
+                    <i class="far fa-user"></i>
+                    <input type="number" id="guestCount" min="1" max="10" value="2" placeholder="2">
+                    <span>adults</span>
                 </div>
-                <button class="search-btn" onclick="filterHotels()">
-                    <i class="fas fa-search"></i>
-                </button>
+                <button class="sb-btn" onclick="applySearch()">Search</button>
             </div>
         </div>
     </header>
 
-    <main class="container layout">
-        <aside class="filters">
-            <div class="filter-header">
-                <h3>Filters</h3>
-                <button class="clear-btn" onclick="resetFilters()">Clear all</button>
-            </div>
-            
-            <div class="filter-group">
-                <h4>Price Range</h4>
-                <div class="price-inputs">
-                    <input type="number" id="minPrice" placeholder="Min" onchange="filterHotels()">
-                    <span>-</span>
-                    <input type="number" id="maxPrice" placeholder="Max" onchange="filterHotels()">
-                </div>
+    <main class="container layout-grid">
+        
+        <aside class="sidebar">
+            <div class="map-widget">
+                <button>Show on map</button>
             </div>
 
-            <div class="filter-group">
-                <h4>Amenities</h4>
-                <label class="checkbox-row">
-                    <input type="checkbox" value="pool" onchange="filterHotels()"> 
-                    <span>Swimming Pool</span>
-                </label>
-                <label class="checkbox-row">
-                    <input type="checkbox" value="wifi" onchange="filterHotels()"> 
-                    <span>Free WiFi</span>
-                </label>
-                <label class="checkbox-row">
-                    <input type="checkbox" value="gym" onchange="filterHotels()"> 
-                    <span>Gym / Fitness</span>
-                </label>
+            <div class="filter-box">
+                <h3>Filter by:</h3>
+                
+                <div class="f-group">
+                    <h4>Popular Filters</h4>
+                    <label><input type="checkbox" value="breakfast" onchange="applyFilters()"> Breakfast Included</label>
+                    <label><input type="checkbox" value="pool" onchange="applyFilters()"> Swimming Pool</label>
+                    <label><input type="checkbox" value="cancellation" onchange="applyFilters()"> Free Cancellation</label>
+                </div>
+
+                <div class="f-group">
+                    <h4>Star Rating</h4>
+                    <label><input type="checkbox" value="5star" onchange="applyFilters()"> 5 Stars</label>
+                    <label><input type="checkbox" value="4star" onchange="applyFilters()"> 4 Stars</label>
+                    <label><input type="checkbox" value="3star" onchange="applyFilters()"> 3 Stars</label>
+                </div>
+
+                <div class="f-group">
+                    <h4>Budget (per night)</h4>
+                    <input type="range" id="priceRange" min="0" max="30000" step="1000" value="30000" oninput="updatePriceLabel(this.value)" onchange="applyFilters()">
+                    <p>Max: <span id="priceLabel">₱30,000+</span></p>
+                </div>
             </div>
         </aside>
 
-        <section class="results-section">
+        <section class="results-col">
             <div class="results-header">
-                <h2 id="resultCount">Showing properties</h2>
-                <div class="sort-wrapper">
-                    <select id="sortSelect" onchange="sortHotels()">
-                        <option value="recommended">Recommended</option>
-                        <option value="price-low">Price: Low to High</option>
-                        <option value="price-high">Price: High to Low</option>
-                    </select>
+                <h2>Metro Manila: <span id="countDisplay">0</span> properties found</h2>
+                <div class="sort-dropdown">
+                    <button class="sort-btn">Sort by: Top Picks <i class="fas fa-chevron-down"></i></button>
                 </div>
             </div>
 
-            <div class="hotel-grid" id="hotelGrid">
-                </div>
+            <div id="hotelListContainer"></div>
         </section>
+
     </main>
 
-    <div id="bookingModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-            <div class="modal-header">
-                <h2>Confirm your stay</h2>
-                <p id="modalHotelName">Hotel Name</p>
+    <div id="bookingModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-head">
+                <h2 id="modalHotelTitle">Hotel Name</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
             </div>
-            <form id="bookingForm" onsubmit="handleBooking(event)">
-                <div class="form-row">
-                    <div class="input-group">
-                        <label>First Name</label>
-                        <input type="text" required>
+            
+            <div class="modal-body">
+                <div class="booking-grid">
+                    <div class="booking-form">
+                        <h3>Enter your details</h3>
+                        <div class="alert-box">
+                            <i class="fas fa-stopwatch"></i>
+                            <span>Holding this price for <strong>10:00</strong> minutes!</span>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="inp">
+                                <label>First Name</label>
+                                <input type="text" placeholder="Juan">
+                            </div>
+                            <div class="inp">
+                                <label>Last Name</label>
+                                <input type="text" placeholder="Dela Cruz">
+                            </div>
+                        </div>
+                        <div class="inp">
+                            <label>Email Address</label>
+                            <input type="email" placeholder="juan@example.com">
+                            <small>Confirmation will be sent to this email</small>
+                        </div>
+
+                        <div class="room-selector">
+                            <h4>Select Room Type</h4>
+                            <label class="radio-card selected" onclick="selectRoom(0)">
+                                <input type="radio" name="roomType" checked>
+                                <div class="rc-info">
+                                    <span class="rc-name">Standard Double Room</span>
+                                    <span class="rc-desc">1 Queen Bed • City View</span>
+                                </div>
+                                <span class="rc-price" id="priceStandard">₱0</span>
+                            </label>
+                            <label class="radio-card" onclick="selectRoom(1)">
+                                <input type="radio" name="roomType">
+                                <div class="rc-info">
+                                    <span class="rc-name">Executive Suite</span>
+                                    <span class="rc-desc">1 King Bed • Lounge Access</span>
+                                </div>
+                                <span class="rc-price" id="priceSuite">₱0</span>
+                            </label>
+                        </div>
                     </div>
-                    <div class="input-group">
-                        <label>Last Name</label>
-                        <input type="text" required>
+
+                    <div class="booking-summary">
+                        <img id="modalImg" src="" alt="Hotel">
+                        <div class="summ-details">
+                            <div class="summ-row">
+                                <span>Check-in:</span>
+                                <strong id="summCheckIn">--</strong>
+                            </div>
+                            <div class="summ-row">
+                                <span>Check-out:</span>
+                                <strong id="summCheckOut">--</strong>
+                            </div>
+                            <div class="summ-row">
+                                <span>Total Length:</span>
+                                <strong id="summNights">1 night</strong>
+                            </div>
+                            <hr>
+                            <div class="price-breakdown">
+                                <div class="pb-row">
+                                    <span>Room Price</span>
+                                    <span id="summRoomPrice">₱0</span>
+                                </div>
+                                <div class="pb-row">
+                                    <span>Taxes & Fees (12%)</span>
+                                    <span id="summTaxes">₱0</span>
+                                </div>
+                            </div>
+                            <div class="total-row">
+                                <span>Total Price:</span>
+                                <span id="summTotal">₱0</span>
+                            </div>
+                            <button class="confirm-book-btn" onclick="finalizeBooking()">Complete Booking</button>
+                        </div>
                     </div>
                 </div>
-                <div class="input-group">
-                    <label>Email Address</label>
-                    <input type="email" required>
-                </div>
-                <div class="input-group">
-                    <label>Phone Number</label>
-                    <input type="tel" required>
-                </div>
-                <div class="order-summary">
-                    <div class="summary-row">
-                        <span>Total Price</span>
-                        <span id="modalPrice" class="total-price">₱0</span>
-                    </div>
-                </div>
-                <button type="submit" class="btn-confirm">Confirm Booking</button>
-            </form>
+            </div>
         </div>
     </div>
 
