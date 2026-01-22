@@ -3,239 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MetroStays PH | Book Top Hotels in Manila</title>
+    <title>MetroStays | Premium Manila Living</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="container nav-container">
-            <div class="logo">
-                <i class="fas fa-building"></i> Metro<span>Stays</span> PH
-            </div>
-            <div class="nav-menu">
-                <a href="#">PHP <i class="fas fa-chevron-down"></i></a>
-                <a href="#">List your property</a>
-                <a href="#" class="btn-signin">Sign In</a>
+    <nav>
+        <div class="container nav-wrapper">
+            <div class="brand">Metro<span>Stays</span></div>
+            <div class="user-actions">
+                <button class="btn-ghost">List your property</button>
+                <button class="btn-primary" onclick="alert('Login feature would connect to a backend database here.')">Sign In</button>
             </div>
         </div>
     </nav>
 
-    <header class="hero">
-        <div class="hero-content">
-            <h1>Find your perfect stay in Metro Manila</h1>
-            <p>From luxury suites in BGC to heritage stays in Intramuros.</p>
-            
-            <div class="search-box">
-                <div class="search-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <div class="input-group">
-                        <label>Location</label>
-                        <input type="text" placeholder="Where are you going?" value="Makati, Metro Manila">
-                    </div>
+    <header class="hero-search">
+        <div class="container">
+            <h1>Find your sanctuary in Manila.</h1>
+            <div class="search-bar">
+                <div class="search-input">
+                    <label>Location</label>
+                    <input type="text" id="locationInput" placeholder="Try 'Makati' or 'BGC'">
                 </div>
-                <div class="search-item">
-                    <i class="far fa-calendar-alt"></i>
-                    <div class="input-group">
-                        <label>Check-in — Check-out</label>
-                        <input type="text" placeholder="Add dates">
-                    </div>
+                <div class="divider"></div>
+                <div class="search-input">
+                    <label>Check in</label>
+                    <input type="date">
                 </div>
-                <div class="search-item">
-                    <i class="far fa-user"></i>
-                    <div class="input-group">
-                        <label>Guests</label>
-                        <input type="text" placeholder="2 adults, 1 room">
-                    </div>
+                <div class="divider"></div>
+                <div class="search-input">
+                    <label>Guests</label>
+                    <input type="number" placeholder="Add guests" min="1">
                 </div>
-                <button class="search-btn">Search</button>
+                <button class="search-btn" onclick="filterHotels()">
+                    <i class="fas fa-search"></i>
+                </button>
             </div>
         </div>
     </header>
 
-    <main class="container layout-grid">
-        
-        <aside class="sidebar">
+    <main class="container layout">
+        <aside class="filters">
+            <div class="filter-header">
+                <h3>Filters</h3>
+                <button class="clear-btn" onclick="resetFilters()">Clear all</button>
+            </div>
+            
             <div class="filter-group">
-                <h3>Filter by:</h3>
-                <div class="filter-section">
-                    <h4>Popular Filters</h4>
-                    <label class="checkbox"><input type="checkbox" checked> Breakfast included</label>
-                    <label class="checkbox"><input type="checkbox"> Swimming Pool</label>
-                    <label class="checkbox"><input type="checkbox"> Free WiFi</label>
-                    <label class="checkbox"><input type="checkbox"> 5 Star</label>
+                <h4>Price Range</h4>
+                <div class="price-inputs">
+                    <input type="number" id="minPrice" placeholder="Min" onchange="filterHotels()">
+                    <span>-</span>
+                    <input type="number" id="maxPrice" placeholder="Max" onchange="filterHotels()">
                 </div>
-                <div class="filter-section">
-                    <h4>Price per night</h4>
-                    <label class="checkbox"><input type="checkbox"> ₱0 - ₱2,500</label>
-                    <label class="checkbox"><input type="checkbox"> ₱2,500 - ₱5,000</label>
-                    <label class="checkbox"><input type="checkbox" checked> ₱5,000 - ₱10,000</label>
-                    <label class="checkbox"><input type="checkbox"> ₱10,000+</label>
-                </div>
-                <div class="filter-section">
-                    <h4>Neighborhood</h4>
-                    <label class="checkbox"><input type="checkbox" checked> Makati CBD</label>
-                    <label class="checkbox"><input type="checkbox" checked> Bonifacio Global City</label>
-                    <label class="checkbox"><input type="checkbox"> Pasay / MOA</label>
-                    <label class="checkbox"><input type="checkbox"> Malate</label>
-                </div>
+            </div>
+
+            <div class="filter-group">
+                <h4>Amenities</h4>
+                <label class="checkbox-row">
+                    <input type="checkbox" value="pool" onchange="filterHotels()"> 
+                    <span>Swimming Pool</span>
+                </label>
+                <label class="checkbox-row">
+                    <input type="checkbox" value="wifi" onchange="filterHotels()"> 
+                    <span>Free WiFi</span>
+                </label>
+                <label class="checkbox-row">
+                    <input type="checkbox" value="gym" onchange="filterHotels()"> 
+                    <span>Gym / Fitness</span>
+                </label>
             </div>
         </aside>
 
-        <section class="listings">
-            <div class="listings-header">
-                <h2>6 Properties found in Metro Manila</h2>
-                <div class="sort-options">
-                    <span>Sort by: </span>
-                    <select>
-                        <option>Top Reviewed</option>
-                        <option>Price: Low to High</option>
-                        <option>Price: High to Low</option>
+        <section class="results-section">
+            <div class="results-header">
+                <h2 id="resultCount">Showing properties</h2>
+                <div class="sort-wrapper">
+                    <select id="sortSelect" onchange="sortHotels()">
+                        <option value="recommended">Recommended</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
                     </select>
                 </div>
             </div>
 
-            <div class="hotel-card">
-                <div class="hotel-img">
-                    <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hotel 1">
-                    <div class="wishlist-icon"><i class="far fa-heart"></i></div>
+            <div class="hotel-grid" id="hotelGrid">
                 </div>
-                <div class="hotel-details">
-                    <div class="header-row">
-                        <h3>Grand Ayala Luxury Suites</h3>
-                        <div class="stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                    <p class="location"><i class="fas fa-map-marker-alt"></i> Makati CBD, Metro Manila • <a href="#">Show on map</a></p>
-                    <div class="badges">
-                        <span class="badge-green">Breakfast Included</span>
-                        <span class="badge-gray">Free Cancellation</span>
-                    </div>
-                    <p class="description">Experience world-class service in the heart of the business district. Features a rooftop infinity pool and spa.</p>
-                </div>
-                <div class="hotel-price">
-                    <div class="rating-box">
-                        <div class="score-text">Exceptional</div>
-                        <div class="score">9.8</div>
-                    </div>
-                    <div class="price-box">
-                        <span class="nights">1 night, 2 adults</span>
-                        <span class="amount">₱8,500</span>
-                        <span class="taxes">+ ₱1,200 taxes</span>
-                        <button class="btn-check">See Availability</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="hotel-card">
-                <div class="hotel-img">
-                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hotel 2">
-                    <div class="wishlist-icon"><i class="far fa-heart"></i></div>
-                </div>
-                <div class="hotel-details">
-                    <div class="header-row">
-                        <h3>The BGC Horizon Hotel</h3>
-                        <div class="stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                    <p class="location"><i class="fas fa-map-marker-alt"></i> Bonifacio Global City, Taguig • <a href="#">Show on map</a></p>
-                    <div class="badges">
-                        <span class="badge-green">Great Location</span>
-                    </div>
-                    <p class="description">Modern luxury steps away from High Street. Perfect for shopping and nightlife enthusiasts.</p>
-                </div>
-                <div class="hotel-price">
-                    <div class="rating-box">
-                        <div class="score-text">Superb</div>
-                        <div class="score">9.4</div>
-                    </div>
-                    <div class="price-box">
-                        <span class="nights">1 night, 2 adults</span>
-                        <span class="amount">₱12,200</span>
-                        <span class="taxes">+ ₱1,500 taxes</span>
-                        <button class="btn-check">See Availability</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="hotel-card">
-                <div class="hotel-img">
-                    <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hotel 3">
-                    <div class="wishlist-icon"><i class="far fa-heart"></i></div>
-                </div>
-                <div class="hotel-details">
-                    <div class="header-row">
-                        <h3>Manila Bay Heritage</h3>
-                        <div class="stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                    <p class="location"><i class="fas fa-map-marker-alt"></i> Pasay City, Metro Manila • <a href="#">Show on map</a></p>
-                    <div class="badges">
-                        <span class="badge-gray">Bay View</span>
-                    </div>
-                    <p class="description">Historic hotel with stunning sunset views over Manila Bay. Close to MOA and Intramuros.</p>
-                </div>
-                <div class="hotel-price">
-                    <div class="rating-box">
-                        <div class="score-text">Very Good</div>
-                        <div class="score">8.5</div>
-                    </div>
-                    <div class="price-box">
-                        <span class="nights">1 night, 2 adults</span>
-                        <span class="amount">₱5,400</span>
-                        <span class="taxes">+ ₱800 taxes</span>
-                        <button class="btn-check">See Availability</button>
-                    </div>
-                </div>
-            </div>
-             <div class="hotel-card">
-                <div class="hotel-img">
-                    <img src="https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hotel 4">
-                    <div class="wishlist-icon"><i class="far fa-heart"></i></div>
-                </div>
-                <div class="hotel-details">
-                    <div class="header-row">
-                        <h3>Intramuros Courtyard</h3>
-                        <div class="stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                    <p class="location"><i class="fas fa-map-marker-alt"></i> Intramuros, Manila • <a href="#">Show on map</a></p>
-                    <div class="badges">
-                        <span class="badge-green">Cultural Heritage</span>
-                    </div>
-                    <p class="description">Stay inside the Walled City. A boutique hotel featuring Spanish-colonial architecture.</p>
-                </div>
-                <div class="hotel-price">
-                    <div class="rating-box">
-                        <div class="score-text">Excellent</div>
-                        <div class="score">9.0</div>
-                    </div>
-                    <div class="price-box">
-                        <span class="nights">1 night, 2 adults</span>
-                        <span class="amount">₱3,800</span>
-                        <span class="taxes">+ ₱500 taxes</span>
-                        <button class="btn-check">See Availability</button>
-                    </div>
-                </div>
-            </div>
-
         </section>
     </main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 MetroStays PH Inc. All rights reserved. <br>Based in Taguig, Metro Manila, Philippines.</p>
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div class="modal-header">
+                <h2>Confirm your stay</h2>
+                <p id="modalHotelName">Hotel Name</p>
+            </div>
+            <form id="bookingForm" onsubmit="handleBooking(event)">
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>First Name</label>
+                        <input type="text" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Last Name</label>
+                        <input type="text" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" required>
+                </div>
+                <div class="input-group">
+                    <label>Phone Number</label>
+                    <input type="tel" required>
+                </div>
+                <div class="order-summary">
+                    <div class="summary-row">
+                        <span>Total Price</span>
+                        <span id="modalPrice" class="total-price">₱0</span>
+                    </div>
+                </div>
+                <button type="submit" class="btn-confirm">Confirm Booking</button>
+            </form>
         </div>
-    </footer>
+    </div>
 
+    <script src="script.js"></script>
 </body>
-
 </html>
